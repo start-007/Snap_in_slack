@@ -1,0 +1,30 @@
+version: "1"
+
+name: "Create Work Event Snap-In"
+description: "Snap_in to get a mail when the work is created"
+
+connections:
+  - name: devrev
+    description: DevRev PAT
+    types:
+      - devrev-pat
+
+event-sources:
+  - name: devrev-webhook
+    description: Event coming from Devrev
+    display_name: Devrev
+    type: devrev-webhook
+    config:
+      event_types:
+        - work_created
+
+functions:
+  - name: createWorkSnapin
+    description: function_contain_login_to_send_a_mail_when_work_is_created
+
+automations:
+  - name: send_mail
+    source: devrev-webhook
+    event_types:
+      - work_created
+    function: createWorkSnapin
